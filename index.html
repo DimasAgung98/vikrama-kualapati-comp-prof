@@ -516,10 +516,17 @@
         const ADMIN_PIN = "1234";
         let user = null;
 
+        // Rank order definition (Lower is higher)
+        const hierarchyRank = {
+            "THE DON": 1,
+            "CAPOREGIME": 2,
+            "WACAPO": 3,
+            "SOLDIER": 4
+        };
+
         // Firebase Initialization
         const initFirebase = async () => {
             try {
-                // RULE 3: Auth Before Queries
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -546,12 +553,15 @@
         const setupListeners = () => {
             if (!user) return;
             
-            // RULE 1: Strict Paths
             // Listen Family
             const familyRef = collection(db, 'artifacts', appId, 'public', 'data', 'family');
             onSnapshot(familyRef, (snapshot) => {
                 const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderFamily(data);
+                // RULE 2: Fetch all data, then filter/sort in memory
+                const sortedData = data.sort((a, b) => {
+                    return (hierarchyRank[a.rank] || 99) - (hierarchyRank[b.rank] || 99);
+                });
+                renderFamily(sortedData);
             }, (err) => console.error("Firestore listener error:", err));
 
             // Listen Gallery
@@ -726,6 +736,7 @@
             if(type === 'family') {
                 const descContainer = document.getElementById('descContainer');
                 if (descContainer) descContainer.style.display = 'block';
+                // Hierarchical Order in Select
                 ['THE DON', 'CAPOREGIME', 'WACAPO', 'SOLDIER'].forEach(r => rankSelect.innerHTML += `<option value="${r}">${r}</option>`);
             } else {
                 const descContainer = document.getElementById('descContainer');
