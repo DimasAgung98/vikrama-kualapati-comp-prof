@@ -72,32 +72,36 @@
         .hero-filter {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 1;
+            filter: grayscale(50%);
         }
 
-        /* 3D Card Effect */
+        /* Enhanced 3D Card Effect */
         .card-container {
-            perspective: 1000px;
+            perspective: 1500px;
             z-index: 10;
         }
 
         .card-3d {
-            transition: transform 0.1s ease-out;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(197, 160, 89, 0.3);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(197, 160, 89, 0.2);
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .card-3d:hover {
             border-color: var(--gold);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 30px rgba(197, 160, 89, 0.15);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 30px rgba(197, 160, 89, 0.2);
         }
 
-        .card-content {
-            transform: translateZ(50px);
+        /* Elements inside card with parallax pop */
+        .parallax-element {
+            transform: translateZ(60px);
+            transform-style: preserve-3d;
         }
 
         .rank-tag {
@@ -108,6 +112,31 @@
             padding: 4px 12px;
             font-size: 0.75rem;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .don-glow {
+            border: 1.5px solid rgba(197, 160, 89, 0.6);
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.15);
+        }
+
+        .don-glow::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, var(--gold), transparent);
+            z-index: -1;
+            border-radius: inherit;
+            animation: rotate-border 4s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes rotate-border {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         /* Gallery Item Hover */
@@ -126,16 +155,6 @@
         .gallery-item:hover img {
             transform: scale(1.1);
             filter: grayscale(0%) brightness(100%);
-        }
-
-        .gallery-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
         }
 
         /* Navigation */
@@ -253,21 +272,28 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* MP3 Player */
+        /* Improved MP3 Player UI */
         #musicPlayer {
             position: fixed;
             bottom: 1.5rem;
             left: 1.5rem;
             z-index: 150;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--gold);
-            padding: 12px 20px;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 12px 24px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            gap: 20px;
+            border-radius: 50px; /* Pill shape */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            min-width: 320px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .player-btn {
@@ -275,46 +301,94 @@
             border: none;
             color: var(--gold);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(197, 160, 89, 0.1);
         }
 
         .player-btn:hover {
             color: white;
+            background: var(--gold);
             transform: scale(1.1);
         }
 
+        .music-status-box {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 80px;
+        }
+
+        .music-info-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+        }
+
+        #musicStatus {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        /* Improved Volume Slider */
         .volume-container {
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-left: 1px solid rgba(197, 160, 89, 0.3);
+            gap: 12px;
+            border-left: 1px solid rgba(197, 160, 89, 0.2);
             padding-left: 15px;
         }
 
         input[type="range"] {
             -webkit-appearance: none;
-            width: 80px;
-            height: 4px;
+            width: 70px;
+            height: 3px;
             background: rgba(255,255,255,0.1);
             border-radius: 2px;
             cursor: pointer;
+            outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: var(--gold);
             border-radius: 50%;
+            transition: transform 0.2s;
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
         }
 
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+
+        /* Footer Adjustments */
         footer {
             position: relative;
             z-index: 20;
             padding-bottom: 6rem !important; 
+        }
+
+        .social-icon-img {
+            width: 24px;
+            height: 24px;
+            filter: grayscale(100%) brightness(1.5);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-img:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: translateY(-3px);
+            drop-shadow: 0 0 8px var(--gold);
         }
 
         .loading-screen {
@@ -362,24 +436,28 @@
         <button onclick="hideMessage()" class="text-[#c5a059] ml-4 hover:text-white">✕</button>
     </div>
 
-    <!-- MP3 Player UI -->
+    <!-- Improved MP3 Player UI -->
     <div id="musicPlayer">
-        <div class="music-info font-cinzel text-[9px] uppercase tracking-[2px] text-gray-500">
+        <div class="music-status-box font-cinzel">
+            <span class="music-info-label">V.K Anthem</span>
             <span id="musicStatus">PAUSED</span>
         </div>
-        <div class="flex items-center gap-3">
-            <button id="playPauseBtn" onclick="togglePlay()" class="player-btn">
-                <svg id="playIcon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg id="pauseIcon" class="hidden" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        
+        <div class="player-controls">
+            <button id="playPauseBtn" onclick="togglePlay()" class="player-btn" title="Play/Pause">
+                <svg id="playIcon" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pauseIcon" class="hidden" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
             </button>
-            <button onclick="stopMusic()" class="player-btn">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+            <button onclick="stopMusic()" class="player-btn" title="Stop">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
             </button>
         </div>
+
         <div class="volume-container">
             <svg width="14" height="14" fill="var(--gold)" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
         </div>
+        
         <audio id="mainAudio" loop>
             <source src="https://res.cloudinary.com/testingbrok/video/upload/TAHTA_HITAM_Official_Music_Vikrama_Kulapati_ANTHEM_V3_muqeig.mp4" type="audio/mpeg">
         </audio>
@@ -389,7 +467,7 @@
     <div id="pinModal" class="modal-overlay fixed inset-0 z-[100] items-center justify-center p-4">
         <div class="bg-[#111] border border-[#c5a059] p-8 rounded-lg max-w-sm w-full text-center">
             <h3 class="font-cinzel text-xl text-[#c5a059] mb-4 uppercase tracking-widest">Admin Access</h3>
-            <p class="text-gray-400 text-sm mb-6">Masukkan PIN VK</p>
+            <p class="text-gray-400 text-sm mb-6">Masukkan PIN Keamanan</p>
             <input type="password" id="pinInput" placeholder="****" class="bg-black border border-gray-800 text-white text-center text-2xl tracking-[1em] w-full p-3 mb-6 focus:border-[#c5a059] outline-none">
             <div class="flex gap-4">
                 <button onclick="closeModals()" class="flex-1 border border-gray-700 py-2 hover:bg-gray-900 transition-colors text-sm text-white">BATAL</button>
@@ -474,19 +552,21 @@
     </section>
 
     <section id="hierarchy" class="py-24 px-8 min-h-screen flex flex-col justify-center bg-[var(--deep-black)]">
-        <div class="text-center mb-12">
+        <div class="text-center mb-16">
             <h2 class="text-5xl font-bold font-cinzel mb-4 tracking-tight uppercase">Family Hierarchy</h2>
             <div class="w-24 h-1 bg-[#c5a059] mx-auto mb-10"></div>
             <div id="hierarchyAdminControls" class="hidden mb-12"><button onclick="prepareAdd('family')" class="bg-[#c5a059] text-black px-8 py-3 text-xs font-bold hover:bg-white transition-colors uppercase tracking-[0.2em] rounded-sm">Tambah Anggota Keluarga</button></div>
-            <div id="familyContainer" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+        </div>
+        
+        <div id="familyContainer" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 items-start">
+            <!-- Data diisi oleh JS -->
         </div>
     </section>
 
     <footer class="py-16 px-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-gray-600 text-sm bg-[var(--deep-black)]">
-        <div class="font-cinzel text-[#c5a059] font-bold mb-4 md:mb-0 uppercase tracking-widest text-base tracking-tighter">Vikrama Kulapati &copy; 2026. All Rights Reserved.</div>
-        <div class="flex space-x-8 font-cinzel text-xs tracking-widest uppercase">
-            <a href="#" class="hover:text-white transition-colors">Discord</a>
-            <a href="#" class="hover:text-white transition-colors">Instagram</a>
+        <div class="font-cinzel text-[#c5a059] font-bold mb-4 md:mb-0 uppercase tracking-widest text-base tracking-tighter">Respect is earned, loyalty is sworn, silence is eternal</div>
+        <div class="flex space-x-6 items-center">
+            <div class="font-cinzel text-[#c5a059] font-bold mb-4 md:mb-0 uppercase tracking-widest text-base tracking-tighter">Vikrama Kulapati &copy; 2026. All Rights Reserved.</div>
         </div>
     </footer>
 
@@ -496,7 +576,6 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Config (Data Anda sudah saya masukkan agar langsung jalan)
         const firebaseConfig = {
             apiKey: "AIzaSyBdnTKzLPkKDRHveRtjSNVn4bB1U5yfNAM",
             authDomain: "vikrama-kulapati-web-profile.firebaseapp.com",
@@ -512,10 +591,9 @@
         const appId = "vikrama-kulapati";
 
         window.isAdmin = false;
-        const ADMIN_PIN = "7411";
+        const ADMIN_PIN = "1234";
         let user = null;
 
-        // Rank order definition (Lower is higher priority)
         const hierarchyRank = {
             "THE DON": 1,
             "CAPOREGIME": 2,
@@ -548,7 +626,6 @@
             const familyRef = collection(db, 'artifacts', appId, 'public', 'data', 'family');
             onSnapshot(familyRef, (snapshot) => {
                 const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                // Sort by hierarchy priority
                 const sortedData = data.sort((a, b) => {
                     return (hierarchyRank[a.rank] || 99) - (hierarchyRank[b.rank] || 99);
                 });
@@ -590,22 +667,31 @@
             const container = document.getElementById('familyContainer');
             if(!container) return;
             container.innerHTML = '';
+            
             items.forEach((member) => {
                 let adminUI = window.isAdmin ? `
                     <div class="admin-actions">
                         <div class="admin-btn" onclick="prepareEdit('family', '${member.id}', ${JSON.stringify(member).replace(/"/g, '&quot;')})">✎</div>
                         <div class="admin-btn btn-delete" onclick="deleteItem('family', '${member.id}')">✕</div>
                     </div>` : '';
+
+                const isDon = member.rank === "THE DON";
+                const cardClass = isDon ? "md:col-span-4 lg:col-span-4 mx-auto max-w-md don-glow" : "col-span-1";
+                const rankDisplay = isDon ? `<div class="flex justify-center mb-2"><span class="rank-tag px-6 py-1 text-sm">THE DON</span></div>` : `<span class="rank-tag">${member.rank}</span>`;
+
                 container.innerHTML += `
-                    <div class="card-container" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                        <div class="card-3d p-8 h-[450px] flex flex-col justify-end rounded-sm overflow-hidden group">
+                    <div class="card-container ${cardClass}" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                        <div class="card-3d p-8 ${isDon ? 'h-[550px]' : 'h-[450px]'} flex flex-col justify-end rounded-sm overflow-hidden group">
                             ${adminUI}
-                            <div class="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity bg-cover bg-center grayscale" style="background-image: url('${member.photo}')"></div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                            <div class="card-content relative z-10 text-shadow-strong">
-                                <span class="rank-tag">${member.rank}</span>
-                                <h3 class="text-2xl md:text-3xl font-bold mt-4 font-cinzel text-white uppercase tracking-widest">${member.name}</h3>
-                                <p class="text-gray-300 text-xs mt-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 tracking-wider">${member.desc}</p>
+                            <div class="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity bg-cover bg-center grayscale group-hover:grayscale-0 duration-700" style="background-image: url('${member.photo}')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                            
+                            <div class="parallax-element relative z-10 text-center">
+                                ${rankDisplay}
+                                <h3 class="${isDon ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'} font-bold mt-4 font-cinzel text-white uppercase tracking-widest text-shadow-strong">${member.name}</h3>
+                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
+                                    <p class="text-gray-300 text-xs mt-4 tracking-wider leading-relaxed px-4 italic">${member.desc}</p>
+                                </div>
                             </div>
                         </div>
                     </div>`;
@@ -674,7 +760,6 @@
 
     <!-- Global Video & Music Scripts -->
     <script>
-        // YouTube API Readiness check
         window.onYouTubeIframeAPIReady = function() {
             new YT.Player('hero-youtube-player', {
                 videoId: 'IVn_llDPdLg',
@@ -698,7 +783,6 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // Music & UI Controls
         function showMessage(text) {
             const box = document.getElementById('messageBox');
             const textEl = document.getElementById('messageText');
@@ -766,13 +850,34 @@
 
         function handleTilt(e, card) {
             const cardInner = card.querySelector('.card-3d');
+            const parallaxItems = card.querySelectorAll('.parallax-element');
             if (!cardInner) return;
+            
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            cardInner.style.transform = `rotateX(${(y - rect.height/2)/15}deg) rotateY(${-(x - rect.width/2)/15}deg)`;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            parallaxItems.forEach(item => {
+                item.style.transform = `translateZ(80px) translateX(${(x - centerX) / 15}px) translateY(${(y - centerY) / 15}px)`;
+            });
         }
-        function resetTilt(card) { card.querySelector('.card-3d').style.transform = `rotateX(0deg) rotateY(0deg)`; }
+
+        function resetTilt(card) {
+            const cardInner = card.querySelector('.card-3d');
+            const parallaxItems = card.querySelectorAll('.parallax-element');
+            if(cardInner) cardInner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            parallaxItems.forEach(item => {
+                item.style.transform = `translateZ(60px) translateX(0) translateY(0)`;
+            });
+        }
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -784,4 +889,3 @@
     </script>
 </body>
 </html>
-
