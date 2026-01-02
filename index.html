@@ -542,14 +542,19 @@
         </div>
     </section>
 
-    <section id="gallery" class="py-24 px-8 bg-[#0a0a0a]">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-5xl font-bold font-cinzel mb-4 tracking-tight uppercase">Game Gallery</h2>
-            <div class="w-24 h-1 bg-[#c5a059] mx-auto mb-6"></div>
-            <div id="galleryAdminControls" class="hidden mb-12"><button onclick="prepareAdd('gallery')" class="bg-[#c5a059] text-black px-8 py-3 text-xs font-bold hover:bg-white transition-colors uppercase tracking-[0.2em] rounded-sm">Tambah Foto Galeri</button></div>
-            <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <section id="gallery" class="py-24 px-8 relative" style="background-image: url('https://cdn.discordapp.com/attachments/1448375258875691079/1456684753833951426/Untitled_design_1.png?ex=695942e5&is=6957f165&hm=4f92f45d59e4d32f972566d4b6cfb3aff5b13b4ed5dcee41fa7cdd40c7013f28&'); background-size: cover; background-position: center;">
+    <!-- Tambahkan overlay gelap agar teks tetap terbaca -->
+    <div class="absolute inset-0 bg-black/70 -z-10"></div>
+    
+    <div class="max-w-7xl mx-auto text-center mb-16 relative z-10">
+        <h2 class="text-5xl font-bold font-cinzel mb-4 tracking-tight uppercase">Game Gallery</h2>
+        <div class="w-24 h-1 bg-[#c5a059] mx-auto mb-6"></div>
+        <div id="galleryAdminControls" class="hidden mb-12">
+            <button onclick="prepareAdd('gallery')" class="bg-[#c5a059] text-black px-8 py-3 text-xs font-bold hover:bg-white transition-colors uppercase tracking-[0.2em] rounded-sm">Tambah Foto Galeri</button>
         </div>
-    </section>
+        <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+</section>
 
     <section id="hierarchy" class="py-24 px-8 min-h-screen flex flex-col justify-center bg-[var(--deep-black)]">
         <div class="text-center mb-16">
@@ -889,3 +894,4 @@
     </script>
 </body>
 </html>
+
