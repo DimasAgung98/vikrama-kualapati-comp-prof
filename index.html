@@ -401,6 +401,29 @@
             justify-content: center;
             transition: opacity 0.5s;
         }
+/* LOGO VK 3D */
+  @keyframes rotate3d {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.animate-rotate-3d {
+    animation: rotate3d 3s linear infinite;
+    transform-style: preserve-3d;
+}
+
+.animate-rotate-3d:hover {
+    animation: rotate3d 1s linear infinite; /* Lebih cepat saat hover */
+    filter: brightness(1.2); /* Lebih terang */
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
     </style>
 </head>
 <body>
@@ -425,8 +448,10 @@
             <a href="#hierarchy" class="nav-link">Hierarchy</a>
             <button id="adminMainBtn" onclick="handleAdminAuth()" class="nav-link text-[#c5a059] font-bold">Admin</button>
         </div>
-        <a href="#" class="flex items-center">
-            <img src="https://i.ibb.co.com/h1X1sJPG/vk.png" alt="vk" class="h-16 w-auto hover:opacity-80 transition-opacity">
+        <a href="#" class="flex items-center perspective-1000">
+            <img src="https://i.ibb.co.com/h1X1sJPG/vk.png" 
+                alt="vk" 
+                class="h-16 w-auto transition-all duration-700 animate-rotate-3d">
         </a>
     </nav>
 
@@ -894,6 +919,4 @@
     </script>
 </body>
 </html>
-
-
 
