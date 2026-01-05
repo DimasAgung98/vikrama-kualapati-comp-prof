@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - VIKRAMA KULAPATI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://i.ibb.co.com/v4GmRjLj/Hitam-Oranye-Lingkaran-Paguyuban-Kelas-Logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #0a0a0a;
+        }
+        body {
+            background-color: var(--dark);
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 bg-[#0a0a0a] z-50 flex items-center justify-center">
+        <div class="text-center">
+            <h2 class="font-cinzel text-2xl text-[#c5a059] animate-pulse uppercase tracking-[0.3em]">Verifying Access...</h2>
+        </div>
+    </div>
+
+    <!-- PIN Modal -->
+    <div id="pinModal" class="max-w-md w-full bg-[#111] border-2 border-[#c5a059] p-8 rounded-lg text-center shadow-2xl">
+        <div class="mb-6">
+            <img src="https://i.ibb.co.com/v4GmRjLj/Hitam-Oranye-Lingkaran-Paguyuban-Kelas-Logo.png" 
+                 alt="VK Logo" 
+                 class="w-24 h-24 mx-auto mb-4 opacity-80">
+            <h1 class="font-cinzel text-3xl text-[#c5a059] mb-2 uppercase tracking-widest">Admin Access</h1>
+            <p class="text-gray-500 text-sm uppercase tracking-wider">Authorized Personnel Only</p>
+        </div>
+        
+        <div class="mb-8">
+            <input type="password" 
+                   id="pinInput" 
+                   placeholder="Enter PIN" 
+                   maxlength="4"
+                   class="bg-black border-2 border-gray-800 text-white text-center text-3xl tracking-[1em] w-full p-4 mb-2 focus:border-[#c5a059] outline-none rounded"
+                   autofocus>
+            <p id="errorMsg" class="text-red-500 text-xs mt-2 hidden">INCORRECT PIN</p>
+        </div>
+        
+        <div class="flex gap-4">
+            <button onclick="window.location.href='index.html'" 
+                    class="flex-1 border-2 border-gray-700 py-3 hover:bg-gray-900 transition-colors text-sm text-white rounded uppercase tracking-widest">
+                Cancel
+            </button>
+            <button onclick="verifyPin()" 
+                    class="flex-1 bg-[#c5a059] text-black font-bold py-3 hover:bg-white transition-colors text-sm rounded uppercase tracking-widest">
+                Verify
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdnTKzLPkKDRHveRtjSNVn4bB1U5yfNAM",
+            authDomain: "vikrama-kulapati-web-profile.firebaseapp.com",
+            projectId: "vikrama-kulapati-web-profile",
+            storageBucket: "vikrama-kulapati-web-profile.firebasestorage.app",
+            messagingSenderId: "565873097574",
+            appId: "1:565873097574:web:e4a41838be2ab6287f26a7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const ADMIN_PIN = "7411";
+
+        // Initialize Firebase Auth
+        signInAnonymously(auth).then(() => {
+            document.getElementById('loader').style.display = 'none';
+        });
+
+        window.verifyPin = () => {
+            const input = document.getElementById('pinInput');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (input.value === ADMIN_PIN) {
+                localStorage.setItem('adminAuth', 'true');
+                window.location.href = 'index.html';
+            } else {
+                errorMsg.classList.remove('hidden');
+                input.value = '';
+                input.classList.add('border-red-500');
+                setTimeout(() => {
+                    errorMsg.classList.add('hidden');
+                    input.classList.remove('border-red-500');
+                }, 2000);
+            }
+        };
+
+        // Enter key support
+        document.getElementById('pinInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyPin();
+        });
+    </script>
+</body>
+</html>
