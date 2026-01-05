@@ -616,7 +616,7 @@
 
         window.isAdmin = false;
         const ADMIN_PIN = "7411";
-        if (localStorage.getItem('adminAuth') === 'true') {
+        if (sessionStorage.getItem('adminAuth') === 'true') {
             window.isAdmin = true;
         }
         let user = null;
