@@ -622,10 +622,12 @@
         let user = null;
 
         const hierarchyRank = {
-            "THE DON": 1,
-            "CAPOREGIME": 2,
-            "WACAPO": 3,
-            "SOLDIER": 4
+                "EL JEFE": 1,
+                "UNDERBOSS": 2,
+                "CONSIGLIERE": 3,
+                "CAPO": 4,
+                "SICARIO": 5,
+                "SOLDIER": 6
         };
 
         const initFirebase = async () => {
@@ -714,20 +716,20 @@
                         <div class="admin-btn btn-delete" onclick="deleteItem('family', '${member.id}')">✕</div>
                     </div>` : '';
 
-                const isDon = member.rank === "THE DON";
-                const cardClass = isDon ? "md:col-span-4 lg:col-span-4 mx-auto max-w-md don-glow" : "col-span-1";
-                const rankDisplay = isDon ? `<div class="flex justify-center mb-2"><span class="rank-tag px-6 py-1 text-sm">THE DON</span></div>` : `<span class="rank-tag">${member.rank}</span>`;
+                const isBoss = member.rank === "EL JEFE";
+                const cardClass = isBoss ? "md:col-span-4 lg:col-span-4 mx-auto max-w-md don-glow" : "col-span-1";
+                const rankDisplay = isBoss ? `<div class="flex justify-center mb-2"><span class="rank-tag px-6 py-1 text-sm">EL JEFE</span></div>` : `<span class="rank-tag">${member.rank}</span>`;
 
                 container.innerHTML += `
                     <div class="card-container ${cardClass}" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                        <div class="card-3d p-8 ${isDon ? 'h-[550px]' : 'h-[450px]'} flex flex-col justify-end rounded-sm overflow-hidden group">
+                        <div class="card-3d p-8 ${isBoss ? 'h-[550px]' : 'h-[450px]'} flex flex-col justify-end rounded-sm overflow-hidden group">
                             ${adminUI}
                             <div class="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity bg-cover bg-center grayscale group-hover:grayscale-0 duration-700" style="background-image: url('${member.photo}')"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                             
                             <div class="parallax-element relative z-10 text-center">
                                 ${rankDisplay}
-                                <h3 class="${isDon ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'} font-bold mt-4 font-cinzel text-white uppercase tracking-widest text-shadow-strong">${member.name}</h3>
+                                <h3 class="${isBoss ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'} font-bold mt-4 font-cinzel text-white uppercase tracking-widest text-shadow-strong">${member.name}</h3>
                                 <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
                                     <p class="text-gray-300 text-xs mt-4 tracking-wider leading-relaxed px-4 italic">${member.desc}</p>
                                 </div>
@@ -842,7 +844,7 @@
             rankSelect.innerHTML = '';
             if(type === 'family') {
                 document.getElementById('descContainer').style.display = 'block';
-                ['THE DON', 'CAPOREGIME', 'WACAPO', 'SOLDIER'].forEach(r => rankSelect.innerHTML += `<option value="${r}">${r}</option>`);
+                ['EL JEFE', 'UNDERBOSS', 'CONSIGLIERE', 'CAPO', 'SICARIO', 'SOLDIER'].forEach(r => rankSelect.innerHTML += `<option value="${r}">${r}</option>`);
             } else {
                 document.getElementById('descContainer').style.display = 'none';
                 ['Mission', 'Lifestyle', 'Territory'].forEach(c => rankSelect.innerHTML += `<option value="${c}">${c}</option>`);
